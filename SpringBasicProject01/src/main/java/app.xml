@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+<!--  
+
+	DI, AOP, JDBC, ORM => 컨테이너: 메모리할당, 메모리회수, DI, DL
+
+											   BeanFactory: CORE(DI, DL)
+													|
+											ApplicationContext: DI, DL, AOP
+													|
+	=======================================================================================================												
+	WebApplicationContext			AnnotaionConfigApplicationContext			GenericXmlApplictionContext
+		DI,DL,AOP,MVC				   DI,DL,AOP,Java(XML은 사용불가능)					DI,DL,AOP,Java,XML   	
+		
+	ApplicationContext=> XML
+	1. XML파싱
+	2. 클래스에 메모리를 할당
+	3. Setter에 값을 채운다.
+	4. 필요한 메소드 호출 가능=> init-method, destory-method
+	=================================================기본셋팅(Spring이 담당)
+	5. 프로그래머가 필요한 메소드호출
+	6. 메모리 해체	
+	
+	등록과 활용부분을 잘 구분해야한다.
+	setMethod에 값채우기
+-->
+	<bean id="dao" class="com.sist.spring.EmpDAO" init-method="init">
+		<!-- DI부분 -->
+		<property name="driverName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+		<property name="userName" value="hr"/>
+		<property name="password" value="happy"/>
+	</bean>
+<!--  
+	EmpDAO dao=new EmpDAO();
+	dao.setDriverName("oracle.jdbc.driver.OracleDriver");
+	......
+	의 작업을 Spring의 DI가 해준다.
+	=> 다음으로, ApplicationContect에 등록한다.
+-->	
+
+	<!--ref에는 id명청을 넣어주면된다.  -->
+	<bean id="mc" class="com.sist.spring.MainClass"
+		p:dao-ref="dao"
+	/>
+	
+	<bean id="mc2" class="com.sist.spring.MainClass2"
+		p:dao-ref="dao"
+	/>
+
+</beans>
