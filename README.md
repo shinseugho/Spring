@@ -14,4 +14,4 @@
  수업일자 | 수업진도 | 수업내용 | 과제 
 ---|:---:|:---:|:---:
 2020.05.06 | SpringBasicProject01 - SpringBasicProject03 | Spring기초(DI개념) | dept테이블 column 출력 
-2020.05.07 | SpringBasicProject04 - SpringBasicProject0 | Spring기초() | 
+2020.05.07 | SpringBasicProject04 - SpringBasicProject0 | Spring기초(XML,어노테이션,혼합) | 
