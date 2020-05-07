@@ -16,6 +16,7 @@
 3. mapper.xml
 4. DAO
 5. app.xml
+6. MainClass
 
 # 진도/내용/과제
  수업일자 | 수업진도 | 수업내용 | 과제 
