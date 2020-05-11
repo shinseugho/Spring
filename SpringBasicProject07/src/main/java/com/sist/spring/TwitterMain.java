@@ -20,6 +20,7 @@ public class TwitterMain {
 			fq.track(data);
 			
 			ts.filter(fq);
+			/*¤±*/
 		}
 		catch(Exception ex)
 		{
