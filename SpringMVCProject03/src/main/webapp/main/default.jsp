@@ -21,7 +21,8 @@
 				super(props);
 				this.state={
 					movie:[],
-					no:1
+					no:1,
+					detail:{}
 				}
 			}
 			componentWillMount()
@@ -61,7 +62,10 @@
 				)
 				return (
 					<div className="row text-center">
-						<button className="btn btn-sm btn-primary" onClick={}>
+						<button className="btn btn-sm btn-primary" onClick={movieClick}>박스오피스</button>
+						<button className="btn btn-sm btn-danger" onClick={movieClick}>실시간 에매율</button>
+						<button className="btn btn-sm btn-success" onClick={movieClick}>좌석 점유율</button>
+						<button className="btn btn-sm btn-primary" onClick={movieClick}>온라인 이용순위</button>
 					</div>
 					<div className="row">
 						<div className="col-sm-6">						
