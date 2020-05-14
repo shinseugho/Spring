@@ -29,4 +29,36 @@ public class DataBoardDAO {
 		mapper.hitIncrement(no);
 		return mapper.databoardDetail(no);
 	}
+	
+	public DataBoardVO databoardUpdate(int no)
+	{
+		return mapper.databoardDetail(no);
+	}
+	
+	public String databoardGetPwd(int no)
+	{
+		return mapper.databoardPwd(no);
+	}
+	
+	public void databoardUpdate(DataBoardVO vo)
+	{
+		mapper.databoardUpdate(vo);
+	}
+	
+	public boolean databoardDelete(int no,String pwd)
+	{
+		boolean bCheck=false;
+		String db_pwd=mapper.databoardPwd(no);
+		if(db_pwd.equals(pwd))
+		{
+			mapper.databoardDelete(no);
+			bCheck=true;
+		}
+		return bCheck;
+	}
+	
+	public DataBoardVO databoardFileInfoData(int no)
+	{
+		return mapper.databoardFileInfoData(no);
+	}
 }

@@ -10,6 +10,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -17,12 +18,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sist.dao.*;
+import com.sist.manager.RManager;
 
 @Controller
 @RequestMapping("board/")
 public class DataBoardController {
 	@Autowired
 	private DataBoardDAO dao;
+	
+	@Autowired
+	private RManager rm;
 	
 	@RequestMapping("list.do")
 	public String board_list(Model model, String page)
@@ -66,7 +71,7 @@ public class DataBoardController {
 		{
 			for(MultipartFile mf:list)
 			{
-				String fn=mf.getOriginalFilename(); // 사용자가 보내준 파일의 이름
+				String fn=mf.getOriginalFilename(); // �궗�슜�옄媛� 蹂대궡以� �뙆�씪�쓽 �씠由�
 				File file=new File("c:\\upload\\"+fn);
 				mf.transferTo(file);
 				
@@ -116,6 +121,17 @@ public class DataBoardController {
 		
 		
 		model.addAttribute("vo",vo);
+		
+		//R이용 그래프출력
+		try
+		{
+			FileWriter fw=new FileWriter("c:\\data\\board.txt");
+			fw.write(vo.getContent()+"\r\n");
+			fw.close();
+			
+			rm.rGraph(no);
+		}catch(Exception ex){}
+		
 		return "board/detail";
 	}
 	
@@ -129,9 +145,9 @@ public class DataBoardController {
 			response.setContentLength((int)file.length());
 			
 			BufferedInputStream bis=new BufferedInputStream(new FileInputStream(file));
-			// 서버 => c:\\upload\\a.jpg
-			BufferedOutputStream bos=new BufferedOutputStream(response.getOutputStream()); // 클라이언트의 저장장소에 저장
-			// 클라이언트 영역
+			// �꽌踰� => c:\\upload\\a.jpg
+			BufferedOutputStream bos=new BufferedOutputStream(response.getOutputStream()); // �겢�씪�씠�뼵�듃�쓽 ���옣�옣�냼�뿉 ���옣
+			// �겢�씪�씠�뼵�듃 �쁺�뿭
 			
 			int i=0;
 			byte[] buffer=new byte[1024];
@@ -145,4 +161,26 @@ public class DataBoardController {
 			bos.close();
 		}catch (Exception ex) {}
 	}
+	
+	@RequestMapping("update.do")
+	public String databoard_update(Model model, int no)
+	{
+		DataBoardVO vo=dao.databoardUpdate(no);
+		model.addAttribute("vo",vo);
+		return "board/update";
+	}
+	/*
+	 * JSP Dispatcherservlet @controller 
+	 * 				         ============= @RequestMapping => 결과값출력
+	 * 							         				   dao
+	 * 									        		  model	
+	 */
+	@RequestMapping("delete.do")
+	public String databoard_delete(Model model,int no)
+	{
+		model.addAttribute("no",no);
+		return "board/delete";
+	}
+	
+	
 }
