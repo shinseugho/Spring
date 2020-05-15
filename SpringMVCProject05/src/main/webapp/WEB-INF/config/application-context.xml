@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		<!-- 사용자정의 클래스 등록 -->
+	<context:component-scan base-package="com.sist.*"/>
+	<!-- JSP를 관리해주는 클래스: ViewResolver-->
+	<!-- 사용자 요청(list.do) => Dispatcher => model 
+									       ======
+						  Dispatcher <= @RequestMapping("list.do")
+						      |
+	Spring에서는 ViewResolver를 이용해서 JSP를 request를 전송하는 절차가 추가.(: jsp를 찾기위해 jsp으 경로명을 설정한다.)     
+						      |
+						  해당 JSP로 request를 전송    
+						  
+						 return "list.jsp"
+						 => viewResolver: /main/list.jsp : return "/main/list"(.jsp를 붙이면 안된다.)
+	-->
+	<!--p:prefix:접두어/ p:suffix:접미어  -->	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/"
+		p:suffix=".jsp"
+	/>
+</beans>
