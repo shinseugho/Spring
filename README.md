@@ -29,5 +29,5 @@
 2020.05.13 | SpringMVCProject04 | 자료실 제작 | 
 2020.05.14 | SpringMVCProject05 | mongoDB적용 영화 게시판 | 
 2020.05.15 | SpringMVCProject06 | naver뉴스 parsher 후 R을 이용한 도식화 | 
-
+2020.05.18 | SpringTilesProject01 - SpringTilesProject02 | Tiles 구조 적용 홈페이지 제작 | 
 
