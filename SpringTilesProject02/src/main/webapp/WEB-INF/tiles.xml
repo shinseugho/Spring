@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!--  
+		 controller에서 main이라는 이름이 넘어오면(return "main";) 실행
+	-->
+	<definition name="main" template="/WEB-INF/main/main.jsp">
+		<put-attribute name="header" value="/WEB-INF/main/header.jsp"/>
+		<put-attribute name="nav" value="/WEB-INF/main/nav.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/main/content.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/main/footer.jsp"/>
+	</definition>
+	
+	<!--  
+		 public String board_list(Model model)
+		 {
+		 	return "board/list";
+		 }
+	-->
+	<!-- main은 그대로 유지하고, content부분을 list로 변경해라. => 한부분만 변경할때 쓰이나, 너무 많은 코딩이 필요할 수 있따.. -->
+	<!-- <definition name="board/list" extends="main">
+		<put-attribute name="content" value="/WEB-INF/board/list.jsp"/>
+	</definition> -->
+	
+	<definition name="*/*" extends="main">
+		<!-- {1} 폴더명이고, {2}는 파일명이다.} --> 
+		<put-attribute name="content" value="/WEB-INF/{1}/{2}.jsp"/>
+	</definition>
+	
+	<definition name="*/*/*" extends="main">
+		<put-attribute name="content" value="/WEB-INF/{1}/{2}/{3}.jsp"/>
+	</definition>
+	
+</tiles-definitions>	
