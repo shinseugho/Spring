@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+	<!-- 
+		1. AOP설정
+		2. 사용자정의클래스 등록
+		3. Datasiurce
+		4. Transaction
+		5. MyBatis
+		6. Mongo, Websocket
+		7. 스케쥴러 등록
+		8. 인터셉트 등록
+		9. viewResolver 
+	-->
+	
+	<context:component-scan base-package="com.sist.*"/>
+	
+	<mongo:mongo-client 
+		id="mc"
+		host="127.0.0.1"
+		port="27017"
+	/>
+	
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mc"/>
+		<constructor-arg name="databaseName" value="mydb"/>
+	</bean>
+	
+	<bean id="viewResovler"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/"
+		p:suffix=".jsp"
+	/>
+	
+	<mvc:annotation-driven> 
+		<mvc:message-converters> 
+		<!-- @ResponseBody로 String 처리할때 한글처리 --> 
+		<bean class="org.springframework.http.converter.StringHttpMessageConverter"> 
+			<property name="supportedMediaTypes"> 
+				<list> 
+					<value>text/html;charset=UTF-8</value>
+				 </list> 
+		 		</property> 
+		 	</bean> 
+		 </mvc:message-converters> 
+	</mvc:annotation-driven>
+	
+</beans>
